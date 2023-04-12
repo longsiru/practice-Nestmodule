@@ -1,12 +1,18 @@
+import { BaseService } from './../../../share/service/base/base.service';
 import { Controller, Get } from '@nestjs/common';
 import { AppService } from '../../../../app.service';
 
 //有名字相同的控制器，所以要在控制器里面指定相对应地路由。不然appmodule谁在前面谁先出来。
 //但是defualtmodule挂在了appmodule上所以可以直接用news进入现在这个画面。
 //2.在模块里面怎么使用service
+
+//如何使用公共module
 @Controller('news')
 export class NewsController {
-  constructor(private appService: AppService) {}
+  constructor(
+    private appService: AppService,
+    private baseService: BaseService,
+  ) {}
   @Get()
   index() {
     return 'this is defualt news controller';
@@ -14,6 +20,7 @@ export class NewsController {
 
   @Get('detail')
   detail() {
+    console.log(this.baseService.getDate()); //this is public module service
     return this.appService.getConfig(); //"domain": "www.itying.com"
   }
 }
