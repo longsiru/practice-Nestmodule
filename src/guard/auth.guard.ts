@@ -21,7 +21,8 @@ export class AuthGuard implements CanActivate {
     // return false;
 
     //5.守卫中基于cookie，session的权限判断
-    console.log(context.switchToHttp().getRequest().session);
+    //console.log(context.switchToHttp().getRequest().session);
+    // console.log(context.switchToHttp().getRequest().session.username); //sayo sayo
     /*
     //login
     Session {
@@ -44,7 +45,19 @@ Session {
 }
 
     */
+    var req = context.switchToHttp().getRequest();
+    if (req.path == '/admin/login') {
+      //允许访问login之后，才允许进入其他页面。
+      return true;
+    } else {
+      var userinfo = context.switchToHttp().getRequest().session.username;
 
-    return true;
+      if (userinfo) {
+        return true;
+      }
+
+      return false;
+    }
+    //console.log(req.path);
   }
 }

@@ -18,9 +18,9 @@ export class NewsController {
   ) {}
 
   @Get()
-  @UseGuards(AuthGuard)
+  //@UseGuards(AuthGuard)  //刚刚session出现了两个username，因为这里也有守卫的原因，所以展示注释掉，因为我们配置了全局守卫。
   index() {
-    console.log(this.newsService.getNews());
+    //console.log(this.newsService.getNews());
     return 'this is admin modules new controller';
   }
 
